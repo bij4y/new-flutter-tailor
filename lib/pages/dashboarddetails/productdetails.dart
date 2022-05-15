@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get/get.dart';
 import 'package:newtailor/controller/cart_controller.dart';
 import 'package:newtailor/controller/product_controller.dart';
 import 'package:newtailor/services/service.dart';
-import 'package:newtailor/utility/chip.dart';
-import 'package:newtailor/view/rating_dialog.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   const ProductDetailsPage({Key? key}) : super(key: key);
@@ -49,31 +46,46 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                     .products.value.data[index];
                                 return Column(
                                   children: [
-                                    Card(
-                                      child: ListTile(
-                                        leading: Image.network(
-                                          mydata.image,
-                                        ),
-                                        // leading: Icon(Icons.ac_unit_rounded),
-                                        title: Text(
-                                          mydata.name,
-                                          style: const TextStyle(
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        subtitle: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                    Container(
+                                      child: Image.network(
+                                        mydata.image,
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: Text(
+                                        mydata.name,
+                                        textScaleFactor: 1.8,
+                                      ),
+                                      subtitle: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.ac_unit,
+                                            size: 15,
+                                            color: Colors.grey,
+                                          ),
+                                          const Text(" Rate this Product"),
+                                        ],
+                                      ),
+                                      trailing: Text(
+                                        "Rs. ${mydata.sp}",
+                                        style:
+                                            TextStyle(color: Colors.red[800]),
+                                        textScaleFactor: 1.7,
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: Text("Short Description"),
+                                      subtitle: Text(
+                                          "Special services in stay home Special services in stay homeSpecial services in stay home Special services in stay homeSpecial services in stay homeSpecial services in stay homeSpecial services in stay homeSpecial services in stay homeSpecial services in stay home"),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: Get.size.width,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
                                           children: [
-                                            const Text(
-                                                "Special services in stay home"),
-                                            Text(
-                                              "Rs. ${mydata.sp}",
-                                              textScaleFactor: 1.4,
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
                                             Row(
                                               children: [
                                                 OutlinedButton(
@@ -92,68 +104,37 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                       ),
                                                     ),
                                                   ),
-                                                  child: Column(
+                                                  child: Row(
                                                     children: [
-                                                      Row(
-                                                        children: [
-                                                          IconButton(
-                                                            icon: const Icon(
-                                                              Icons
-                                                                  .remove_circle,
-                                                              size: 30,
-                                                            ),
-                                                            onPressed: () {
-                                                              mydata.qty--;
-                                                              if (mydata.qty <
-                                                                  1) {
-                                                                mydata.qty = 1;
-                                                              }
-                                                              setState(() {});
-                                                            },
-                                                          ),
-                                                          Text(
-                                                            mydata.qty
-                                                                .toString(),
-                                                            style: const TextStyle(
-                                                                fontSize: 20,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                          IconButton(
-                                                            icon: const Icon(
-                                                                Icons
-                                                                    .add_circle,
-                                                                size: 30),
-                                                            onPressed: () {
-                                                              mydata.qty++;
-                                                              setState(() {});
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      MaterialButton(
-                                                        textColor: Colors.green,
+                                                      IconButton(
+                                                        icon: const Icon(
+                                                          Icons.remove_circle,
+                                                          size: 30,
+                                                        ),
                                                         onPressed: () {
-                                                          Map data = {
-                                                            'product_id':
-                                                                mydata.id,
-                                                            'qty': mydata.qty,
-                                                            'amount':
-                                                                mydata.qty *
-                                                                    mydata.sp,
-                                                          };
-
-                                                          RemoteService
-                                                                  .addToCart(
-                                                                      data)
-                                                              .whenComplete(() {
-                                                            cartcontroller
-                                                                .getCartData();
-                                                          });
+                                                          mydata.qty--;
+                                                          if (mydata.qty < 1) {
+                                                            mydata.qty = 1;
+                                                          }
+                                                          setState(() {});
                                                         },
-                                                        child: const Text(
-                                                            "Add To Cart"),
+                                                      ),
+                                                      Text(
+                                                        mydata.qty.toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                      IconButton(
+                                                        icon: const Icon(
+                                                            Icons.add_circle,
+                                                            size: 30),
+                                                        onPressed: () {
+                                                          mydata.qty++;
+                                                          setState(() {});
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -162,6 +143,26 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                                   width: 10,
                                                 ),
                                               ],
+                                            ),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Map data = {
+                                                    'product_id': mydata.id,
+                                                    'qty': mydata.qty,
+                                                    'amount':
+                                                        mydata.qty * mydata.sp,
+                                                  };
+
+                                                  RemoteService.addToCart(data)
+                                                      .whenComplete(() {
+                                                    cartcontroller
+                                                        .getCartData();
+                                                  });
+                                                },
+                                                child:
+                                                    const Text("Add To Cart"),
+                                              ),
                                             ),
                                           ],
                                         ),

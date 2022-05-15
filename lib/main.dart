@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             iconTheme: IconTheme.of(context).copyWith(color: Colors.black)),
       ),
       initialBinding: ControllerBinding(),
-      home: const SpalshScreen(),
+      home: SpalshScreen(),
       routes: {
         "/shippingaddress": (context) => ShippingScreen(),
         "signup": (context) => const RegisterScreen(),

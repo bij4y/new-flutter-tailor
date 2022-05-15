@@ -65,12 +65,17 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Center(
-                      child: Image.asset(
-                    "images/splash.jpg",
-                    height: 240,
-                    width: 240,
-                    alignment: Alignment.center,
-                  )),
+                    child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage("images/splash.jpg"),
+                            fit: BoxFit.cover),
+                      ),
+                    ),
+                  ),
                   const SizedBox(
                     height: 13,
                   ),
@@ -104,7 +109,8 @@ class _SignInState extends State<SignIn> {
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.phone_android),
                               enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.black)),
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
                               hintText: "Mobile",
                               hintStyle:
                                   TextStyle(color: Colors.black, fontSize: 15),

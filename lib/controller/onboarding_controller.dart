@@ -20,11 +20,11 @@ class OnboardingController extends GetxController {
   }
 
   List<OnboardingInfo> onboardingPages = [
-    OnboardingInfo("images/images.jpg", "Order Your Fashion",
-        "Now you can order stitch any time right from your mobile"),
-    OnboardingInfo("images/j.jpg", "Order Your Fashion",
-        "Now you can order stitch any time right from your mobile"),
-    OnboardingInfo("images/i.jpg", "Order Your Fashion",
-        "Now you can order stitch any time right from your mobile"),
+    OnboardingInfo("images/onboarding1.jpg", "Order Your Fashion",
+        "A big Wellcome to your experience in Idris. Now you can order stitch any time right from your mobile."),
+    OnboardingInfo("images/onboarding2.jpg", "Order Your Fashion",
+        "We use advanced technology to provide you with the fit of a lifetime. It's time to leave unflattering off-the-rack sizes behind and join a personalized future."),
+    OnboardingInfo("images/onboarding3.jpg", "Order Your Fashion",
+        "It's time you start wearing high-quality clothes made only for you."),
   ];
 }

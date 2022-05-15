@@ -1,15 +1,32 @@
+import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newtailor/controller/carousel_controller.dart';
 import 'package:newtailor/controller/cart_controller.dart';
 import 'package:newtailor/services/service.dart';
 import 'package:newtailor/utility/auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// ignore: must_be_immutable
-class ShippingScreen extends StatelessWidget {
+class ShippingScreen extends StatefulWidget {
   ShippingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ShippingScreen> createState() => _ShippingScreenState();
+}
+
+class _ShippingScreenState extends State<ShippingScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
-  TextEditingController address = TextEditingController();
+  String? selectedValue;
+
+  List<String> items = [
+    'Dhankuta',
+    'Dharan',
+    'Ithari',
+    'Biratnagar',
+    'Kathmandu',
+    'Pokhara',
+    'Chitwan',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +100,7 @@ class ShippingScreen extends StatelessWidget {
                             onPressed: () async {
                               if (_key.currentState!.validate()) {
                                 Map data = {
-                                  "address": address.text,
+                                  // "address": address.text,
                                   "total": cartController
                                       .cartItems.value.data[0].total,
                                   "products": cartController
@@ -124,10 +141,9 @@ class ShippingScreen extends StatelessWidget {
         padding: const EdgeInsets.all(30),
         child: Column(
           children: [
-            Obx(
-              () => Image.network(
-                  carouselcontroller.carousel.value.data[1].feature),
-            ),
+            // Obx(
+            //   () =>
+            Image.network(carouselcontroller.carousel.value.data[1].feature),
             Form(
               key: _key,
               child: Card(
@@ -142,11 +158,11 @@ class ShippingScreen extends StatelessWidget {
                         children: [
                           Text(
                             Authentication.name,
-                            style: const TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          const Text(
-                            "Edit",
+                            style: GoogleFonts.roboto(
+                              textStyle: TextStyle(
+                                fontSize: 25,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -155,24 +171,43 @@ class ShippingScreen extends StatelessWidget {
                       ),
                       Text(
                         Authentication.email,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
                       Text(
                         Authentication.mobile,
-                        style: const TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                      TextFormField(
-                        validator: (value) =>
-                            value!.isEmpty ? "Required" : null,
-                        controller: address,
-                        decoration:
-                            const InputDecoration(hintText: "shipping address"),
+                        style: GoogleFonts.roboto(
+                          textStyle: const TextStyle(
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
                       const SizedBox(
-                        child: Divider(),
+                        height: 10,
                       ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: CustomDropdownButton2(
+                              hint: 'Select shipping address',
+                              dropdownItems: items,
+                              value: selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(),
                       const ListTile(
                         title: Text("Payment System"),
                         subtitle: Text("Your payment will be on deliver"),
@@ -181,7 +216,7 @@ class ShippingScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       )),

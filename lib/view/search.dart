@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:newtailor/controller/product_controller.dart';
 import 'package:newtailor/controller/search_controller.dart';
 import 'package:newtailor/controller/tailorcontroller.dart';
-import 'package:newtailor/pages/dashboarddetails/productdetails.dart';
 import 'package:newtailor/pages/dashboarddetails/tailordetails.dart';
 
 class SearchPage extends StatelessWidget {
@@ -16,31 +16,64 @@ class SearchPage extends StatelessWidget {
     var tailorcontroller = Get.find<TailorController>();
     var productcontroller = Get.find<ProductController>();
     return Scaffold(
+      appBar: AppBar(
+        elevation: 1.5,
+        title: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(5)),
+          child: Center(
+            child: TextField(
+              decoration: InputDecoration(
+                  prefixIcon: const Icon(
+                    Icons.search,
+                    color: Colors.grey,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(
+                      Icons.clear,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      searchController.searchData(name.text);
+                    },
+                  ),
+                  hintText: 'Search...',
+                  border: InputBorder.none),
+            ),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: name,
-              decoration: InputDecoration(
-                labelText: 'Search Location',
-                suffixIcon: IconButton(
-                    onPressed: () {
-                      searchController.searchData(name.text);
-                    },
-                    icon: const Icon(Icons.search)),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
+            // TextFormField(
+            //   controller: name,
+            //   decoration: InputDecoration(
+            //     labelText: 'Search Location',
+            //     suffixIcon: IconButton(
+            //         onPressed: () {
+            //           searchController.searchData(name.text);
+            //         },
+            //         icon: const Icon(Icons.search)),
+            //   ),
+            // ),
+            // const SizedBox(
+            //   height: 20,
+            // ),
             Obx(() {
               if (searchController.isLoading.value == true) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: SizedBox(
+                    height: 70,
+                    width: 70,
+                    child: Lottie.network(
+                        "https://assets9.lottiefiles.com/packages/lf20_a2chheio.json"),
+                  ),
                 );
               } else {
                 return ListView.builder(

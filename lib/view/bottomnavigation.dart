@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:newtailor/controller/cart_controller.dart';
 import 'package:newtailor/controller/invoice_controller.dart';
 import 'package:newtailor/pages/bottomnavigation/cart/checkout.dart';
@@ -46,23 +47,26 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.black54,
-          unselectedItemColor: Colors.blue,
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: index,
-          onTap: (value) {
-            setState(() {});
-            index = value;
-          },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart), label: "Cart"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: "Profile"),
-          ]),
+        selectedItemColor: Colors.black54,
+        unselectedItemColor: Colors.blue,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {});
+          index = value;
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: "Cart"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.notifications), label: "Notification"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle), label: "Profile"),
+        ],
+      ),
       body: index == 0
           ? const DashboradScreen()
           : index == 1
@@ -77,66 +81,77 @@ class _BottomNavigatorScreenState extends State<BottomNavigatorScreen> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Text("Would you like to login?"),
+                                  Lottie.network(
+                                      "https://assets5.lottiefiles.com/packages/lf20_hy4txm7l.json"),
+                                  const Text(
+                                    "Would you like to login?",
+                                    textScaleFactor: 1.6,
+                                  ),
                                   TextButton(
-                                      onPressed: () {
-                                        Get.to(() => const SignIn());
-                                      },
-                                      child: const Text("Ok",
-                                          style: TextStyle(
-                                            fontSize: 25,
-                                          )))
+                                    onPressed: () {
+                                      Get.to(() => const SignIn());
+                                    },
+                                    child: const Text(
+                                      "Ok",
+                                      textScaleFactor: 2,
+                                      style:
+                                          TextStyle(color: Color(0xffa99bfb)),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         )
-                      : Drawer(
-                          child: ListView(
-                            children: [
-                              UserAccountsDrawerHeader(
-                                accountName: Text(name ?? "Guest"),
-                                accountEmail:
-                                    Text(email ?? "guest@tailorjoin.com"),
-                                currentAccountPicture: CircleAvatar(
-                                  child: Text(Authentication.name == null
-                                      ? "G"
-                                      : Authentication.name
-                                          .toString()
-                                          .substring(0, 1)
-                                          .toUpperCase()),
-                                ),
-                              ),
-                              ListTile(
-                                onTap: () {
-                                  Get.to(() => const PurchaseHistoryScreen());
-                                  purchasecontroller.getPurchaseHistory();
-                                },
-                                title: const Text("Purchase History"),
-                              ),
-                              ListTile(
-                                title:
-                                    const Text('Privacy & Terms Of Conditions'),
-                                onTap: () {
-                                  Get.to(() => const PrivacyScreen());
-                                },
-                              ),
-                              token == null
-                                  ? ListTile(
-                                      title: const Text('Sign In'),
-                                      onTap: () {
-                                        Get.to(() => const SignIn());
-                                      },
-                                    )
-                                  : ListTile(
-                                      title: const Text('LogOut'),
-                                      onTap: () {
-                                        RemoteService.logout();
-                                      },
+                      : index == 0
+                          ? const PurchaseHistoryScreen()
+                          : Drawer(
+                              child: ListView(
+                                children: [
+                                  UserAccountsDrawerHeader(
+                                    accountName: Text(name ?? "Guest"),
+                                    accountEmail:
+                                        Text(email ?? "guest@tailorjoin.com"),
+                                    currentAccountPicture: CircleAvatar(
+                                      child: Text(Authentication.name == null
+                                          ? "G"
+                                          : Authentication.name
+                                              .toString()
+                                              .substring(0, 1)
+                                              .toUpperCase()),
                                     ),
-                            ],
-                          ),
-                        ),
+                                  ),
+                                  ListTile(
+                                    onTap: () {
+                                      Get.to(
+                                          () => const PurchaseHistoryScreen());
+                                      purchasecontroller.getPurchaseHistory();
+                                    },
+                                    title: const Text("Purchase History"),
+                                  ),
+                                  ListTile(
+                                    title: const Text(
+                                        'Privacy & Terms Of Conditions'),
+                                    onTap: () {
+                                      Get.to(() => const PrivacyScreen());
+                                    },
+                                  ),
+                                  token == null
+                                      ? ListTile(
+                                          title: const Text('Sign In'),
+                                          onTap: () {
+                                            Get.to(() => const SignIn());
+                                          },
+                                        )
+                                      : ListTile(
+                                          title: const Text('LogOut'),
+                                          onTap: () {
+                                            RemoteService.logout();
+                                          },
+                                        ),
+                                ],
+                              ),
+                            ),
                 ),
     );
   }

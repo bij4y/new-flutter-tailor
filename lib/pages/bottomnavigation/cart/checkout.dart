@@ -113,12 +113,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             elevation: 0.5,
           ),
           body: Obx(
-            () => SingleChildScrollView(
-              child: Column(
-                children: [
-                  cartController.cartItems.value.data.isEmpty
-                      ? Center(
-                          child: Column(
+            () => Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    cartController.cartItems.value.data.isEmpty
+                        ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: const [
                               Icon(
@@ -133,112 +133,114 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ],
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: cartController.cartItems.value.data.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var mydata =
-                                cartController.cartItems.value.data[index];
-                            return Column(
-                              children: [
-                                Card(
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        leading: Image.network(
-                                            mydata.productFeature),
-                                        title: Text(
-                                          mydata.productName,
-                                          style: const TextStyle(fontSize: 25),
-                                        ),
-                                      ),
-                                      ListTile(
-                                        subtitle: Row(
-                                          children: [
-                                            IconButton(
-                                                onPressed: () {
-                                                  mydata.qty--;
-                                                  if (mydata.qty < 1) {
-                                                    mydata.qty = 1;
-                                                  }
-                                                  Map data = {
-                                                    'qty': mydata.qty,
-                                                    'amount': mydata.qty *
-                                                        mydata.rate,
-                                                  };
-
-                                                  RemoteService.editCartItem(
-                                                          data, mydata.id)
-                                                      .whenComplete(() =>
-                                                          cartController
-                                                              .getCartData());
-                                                  setState(() {});
-                                                },
-                                                icon: const Icon(
-                                                  Icons.remove_circle,
-                                                  size: 28,
-                                                  color: Colors.grey,
-                                                )),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10),
-                                              child: Text(
-                                                "${mydata.qty}",
-                                                style: const TextStyle(
-                                                    fontSize: 28),
-                                              ),
-                                            ),
-                                            IconButton(
-                                                onPressed: () {
-                                                  mydata.qty++;
-                                                  Map data = {
-                                                    'qty': mydata.qty,
-                                                    'amount': mydata.qty *
-                                                        mydata.rate,
-                                                  };
-
-                                                  RemoteService.editCartItem(
-                                                          data, mydata.id)
-                                                      .whenComplete(() =>
-                                                          cartController
-                                                              .getCartData());
-                                                  setState(() {});
-                                                },
-                                                icon: const Icon(
-                                                  Icons.add_circle,
-                                                  size: 28,
-                                                  color: Colors.grey,
-                                                )),
-                                          ],
-                                        ),
-                                        trailing: TextButton(
-                                          onPressed: () {
-                                            RemoteService.deleteCatItem(
-                                                    mydata.id)
-                                                .whenComplete(() {
-                                              cartController.getCartData();
-                                            });
-                                          },
-                                          child: const Text(
-                                            "delete",
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Colors.red),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount:
+                                cartController.cartItems.value.data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var mydata =
+                                  cartController.cartItems.value.data[index];
+                              return Column(
+                                children: [
+                                  Card(
+                                    child: Column(
+                                      children: [
+                                        ListTile(
+                                          leading: Image.network(
+                                              mydata.productFeature),
+                                          title: Text(
+                                            mydata.productName,
+                                            style:
+                                                const TextStyle(fontSize: 25),
                                           ),
                                         ),
-                                      )
-                                    ],
+                                        ListTile(
+                                          subtitle: Row(
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {
+                                                    mydata.qty--;
+                                                    if (mydata.qty < 1) {
+                                                      mydata.qty = 1;
+                                                    }
+                                                    Map data = {
+                                                      'qty': mydata.qty,
+                                                      'amount': mydata.qty *
+                                                          mydata.rate,
+                                                    };
+
+                                                    RemoteService.editCartItem(
+                                                            data, mydata.id)
+                                                        .whenComplete(() =>
+                                                            cartController
+                                                                .getCartData());
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.remove_circle,
+                                                    size: 28,
+                                                    color: Colors.grey,
+                                                  )),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Text(
+                                                  "${mydata.qty}",
+                                                  style: const TextStyle(
+                                                      fontSize: 28),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  onPressed: () {
+                                                    mydata.qty++;
+                                                    Map data = {
+                                                      'qty': mydata.qty,
+                                                      'amount': mydata.qty *
+                                                          mydata.rate,
+                                                    };
+
+                                                    RemoteService.editCartItem(
+                                                            data, mydata.id)
+                                                        .whenComplete(() =>
+                                                            cartController
+                                                                .getCartData());
+                                                    setState(() {});
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.add_circle,
+                                                    size: 28,
+                                                    color: Colors.grey,
+                                                  )),
+                                            ],
+                                          ),
+                                          trailing: TextButton(
+                                            onPressed: () {
+                                              RemoteService.deleteCatItem(
+                                                      mydata.id)
+                                                  .whenComplete(() {
+                                                cartController.getCartData();
+                                              });
+                                            },
+                                            child: const Text(
+                                              "delete",
+                                              style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: Colors.red),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                ],
+                                ],
+                              );
+                            },
+                          ),
+                  ],
+                ),
               ),
             ),
           ),

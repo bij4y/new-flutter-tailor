@@ -62,7 +62,7 @@ class OnboardingPage extends StatelessWidget {
                     height: 12,
                     decoration: BoxDecoration(
                       color: _controller.selectedPageIndex.value == index
-                          ? Colors.red
+                          ? Colors.pinkAccent
                           : Colors.grey,
                       shape: BoxShape.circle,
                     ),

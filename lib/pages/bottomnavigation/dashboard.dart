@@ -52,6 +52,12 @@ class _DashboradScreenState extends State<DashboradScreen> {
                 Row(
                   children: [
                     const SizedBox(width: 10),
+
+                    //  IconButton(
+                    //           onPressed: () => Navigator.of(context)
+                    //               .push(MaterialPageRoute(builder: (_) => SearchPage())),
+                    //           icon: Icon(Icons.search)),
+
                     IconButton(
                       icon: const Icon(
                         Icons.search,
@@ -62,9 +68,12 @@ class _DashboradScreenState extends State<DashboradScreen> {
                     ),
                     const SizedBox(width: 10),
                     Badge(
-                      badgeColor: const Color(0xffc19a67),
+                      badgeColor: Colors.red,
                       badgeContent: token == null
-                          ? const Text("0")
+                          ? const Text(
+                              "0",
+                              style: const TextStyle(color: Colors.white),
+                            )
                           : Obx(
                               () => Text(
                                 "${cartcountroller.cartItems.value.data.length}",
@@ -80,13 +89,14 @@ class _DashboradScreenState extends State<DashboradScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 15),
                   ],
                 ),
               ],
               title: const Text(
                 "Idris",
-                style: TextStyle(color: Colors.brown),
+                textScaleFactor: 1.3,
+                style: TextStyle(color: Colors.blue),
               ),
             ),
 
